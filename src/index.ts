@@ -23,7 +23,7 @@ mongoose
 app.use((_req, res, _next) => {
   return res.status(404).json({
     success: false,
-    message: "Not found",
+    message: "Not found route",
   });
 });
 // server error middleware
