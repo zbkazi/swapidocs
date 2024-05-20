@@ -1,0 +1,24 @@
+openapi: 3.0.2
+
+info:
+  title: Blog
+  version: 1.0.0
+  description: A blog API
+  termsOfService: http://kazibyte.io/terms/
+  contact:
+    name: kazibyte API Team
+    url: http://kazibyte.io
+    email: 0Jt0K@example.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0
+
+servers:
+  - url: http://localhost:8000
+    description: Development server
+  - url: http://localhost:8001
+    description: Staging server
+
+tags: 
+  - name: Authors
+    description: Manage authors
