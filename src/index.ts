@@ -3,13 +3,14 @@ import app from "./app";
 import "dotenv/config";
 import mongoose from "mongoose";
 import swaggerDocs from "./swaggerDocs";
+import '@/utils/Errors'
 app;
 // db;
 
 swaggerDocs;
 
 mongoose
-  .connect("mongodb://localhost:27017/kazibyte_api")
+  .connect("mongodb://localhost:27017/swaggerAPI_Docs")
   .then(() => {
     console.log("Connected to MongoDB success localhost");
   })
@@ -17,27 +18,3 @@ mongoose
     console.log(err);
   });
 
-// error handling middleware
-
-// 404 not found middleware
-app.use((_req, res, _next) => {
-  return res.status(404).json({
-    success: false,
-    message: "Not found route",
-  });
-});
-// server error middleware
-app.use((err, _req, res, _next) => {
-  return res.status(500).json({
-    success: false,
-    message: err.message,
-  });
-});
-
-// bad request middleware
-app.use((err, _req, res, _next) => {
-  return res.status(400).json({
-    success: false,
-    message: err.message,
-  });
-});

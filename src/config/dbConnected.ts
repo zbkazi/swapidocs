@@ -2,7 +2,7 @@
 const mongoose = require("mongoose");
 
 const mongoURI =
-  "mongodb+srv://exzobaidulkazi:m5tgIU0YPwY3A0q3@cluster0.f143vc0.mongodb.net/auth_mechanisms";
+  "mongodb+srv://zobaidulkaziapi:aD3QFYeyFBEDEsL8@cluster0.f143vc0.mongodb.net/swaggerAPI_Docs";
 mongoose.set("strictQuery", true);
 mongoose.connect(mongoURI);
 
