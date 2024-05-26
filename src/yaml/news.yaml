@@ -1,7 +1,7 @@
 openapi: 3.0.2
 
 info:
-  title: Blog
+  title: Todo Application
   version: 1.0.0
   description: A blog API
   termsOfService: http://kazibyte.io/terms/
@@ -22,3 +22,253 @@ servers:
 tags: 
   - name: Authors
     description: Manage authors
+paths:
+  /todos:
+    get:
+      tags:
+      - developers
+      summary: returns an array of BPM todos tasks by root todo id 
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: rootTaskCode
+        description:  teendők folyamat TEENDOKOD descriptor value 
+        required: true
+        type: string
+      - in: query
+        name: assignedTo
+        description: FELELOS descriptor value
+        type: string
+      - in: query
+        name: dueDate
+        description: BEFEJEZES_DATUMA descriptor value
+        type: string
+      responses:
+        200:
+          description: search results matching criteria
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/todo'
+    post:
+      tags:
+      - developers
+      summary: creates a new todo BPM task
+      operationId: todoId
+      description: Adds an item to the system
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: post request body
+        description: Inventory item to add
+        required: true
+        schema:
+          $ref: '#/definitions/todo'
+      - in: query
+        name: rootTaskCode
+        type: string
+        description: teendők folyamat TEENDOKOD descriptor value  
+        required: true
+      responses:
+        201:
+          description: item created
+        200:
+          description: item created
+        400:
+          description: no todo found by rootTaskCode id
+    delete:
+      tags:
+      - developers
+      summary: deletes todo by the given todo code and all it's siblings
+      description: deletes todo by the given todo code and all it's siblings
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: todoCode
+        type: string
+        description: todo to be deleted 
+        required: true
+      responses:
+        200:
+          description: item created
+        400:
+          description: no todo found by the givenn todo id 
+    patch:
+      tags:
+      - developers
+      summary: updates the todo BPM task by the givenn parameters
+      description: updates the todo BPM task by the givenn parameters
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: patch request body
+        description: descriptors to be updated
+        required: false
+        schema:
+          $ref: '#/definitions/todo'
+      - in: query
+        name: rootTaskCode
+        type: string
+        description: teendők folyamat TEENDOKOD descriptor value  
+        required: true
+      responses:
+        201:
+          description: item created
+        200:
+          description: item created
+        400:
+          description: no todo found by the givenn todo id   
+  /users:
+    get:
+      tags:
+      - developers
+      summary: returns all the Doxis4 activ users
+      description: returns all the Doxis4 activ users
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        200:
+          description: returns all Doxis4 active users
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/users'          
+  /updateTodo:
+    patch:
+      tags:
+      - developers
+      summary: updates todo TEENDOKOD_SZULOFELADAT descriptor
+      description: updates todo TEENDOKOD_SZULOFELADAT descriptor
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: post request body
+        description: patch request body
+        required: true
+        schema:
+          $ref: '#/definitions/updateTodo'
+      - in: query
+        name: The todo where it's parent todo needs to be updated
+        type: string
+        description: todo with TEENDOKOD descriptor value  
+        required: true      
+      
+      responses:
+        200:
+          description: returns 200 status code if todo updated
+          schema:
+            type: number
+             
+        400:
+          description: Returns error if no todocode in request param  or parant todo code in request body be  present
+          schema:
+            type: number
+                                
+definitions:
+  updateTodo:
+    type: object  
+    required:
+    - parent
+ 
+
+    properties:
+      parent:
+        type: string
+        format: string
+        example: TODO-120
+  users:
+    type: object  
+    required:
+    - loginName
+    - userId  
+
+    properties:
+      loginName:
+        type: string
+        format: string
+        example: kertesz.karoly
+      userId:
+        type: string
+        format: UUID
+        example: 555918eb-dfb0-458e-80e2-0cb44252c6a9        
+  todo:
+    type: object
+    required:
+    - todoCode
+    - parentTodoCode
+    - rootTodoCode
+    - todoId
+    - depTodoCodes
+    - assignedTo
+    - startDat
+    - dueDate
+    - status
+    - taskDescription
+    - taskName
+  
+    properties:
+      todoCode:
+        type: string
+        format: string
+        example: TODO-125
+      parentTodoCode:
+        type: string
+        example: TODO-120
+      todoId:
+        type: string
+        format: sting
+        example: ST06BPMDB1241f68a3b1-3dff-4253-afcb-10c2ec3386f5182022-04-06T12:03:48.742Z011
+      rootTodoCode:
+        type: string
+        format: sting
+        example: TODO-120
+      depTodoCodes:
+        type: array
+        example: []
+        items:
+          type: object
+      assignedTo:
+        type: string
+        format: sting
+        example: kertesz.karoly
+      startDate:
+        type: string
+        format: sting
+        example: 2022-04-05
+      dueDate:
+        type: string
+        format: sting
+        example: 2022-04-09
+      priority:
+        type: string
+        format: sting
+        example: 1
+      status:
+        type: string
+        format: sting
+        example: 2
+      taskDescription:
+        type: string
+        format: sting
+        example: new Java project
+      taskName:
+        type: string
+        format: sting
+        example: new Java project        
+
+
