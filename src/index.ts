@@ -1,20 +1,24 @@
 import app from "./app";
-// import db from "./config/dbUrl";
+import db from "@/config/dbConnected";
 import "dotenv/config";
 import mongoose from "mongoose";
 import swaggerDocs from "./swaggerDocs";
 import '@/utils/Errors'
 app;
-// db;
+db;
 
 swaggerDocs;
 
-mongoose
-  .connect("mongodb://localhost:27017/swaggerAPI_Docs")
-  .then(() => {
-    console.log("Connected to MongoDB success localhost");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+
+
+
+
+// mongoose
+//   .connect(process.env.mongodbURL_localhost as string)
+//   .then(() => {
+//     console.log("Connected to MongoDB success localhost");
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
 

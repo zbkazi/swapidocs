@@ -1,5 +1,4 @@
 import app from "@/app";
-import { error } from "console";
 import { STATUS_CODES } from "http";
 
 app.use((_req, res, _next) => {
